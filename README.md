@@ -75,7 +75,7 @@ In `--out`, one raster per simulated hour, `lst_dDDD_hHH.tif` (DDD = day of the 
 
 ## Example
 
-The input data of the paper's simulation domain in central Maribor, Slovenia (15.6408° E, 46.5606° N), are in the paper's data record on Zenodo (DOI: to be added), in `inputs.zip`: the 683 m × 619 m study area with a 100 m boundary on all sides, 885 × 821 cells at 1 m in EPSG:3794 (Slovenia 1996 / D96/TM), 1,248,599 surface voxels. The record's README describes the data, their sources and licences.
+The input data of the paper's simulation domain in central Maribor, Slovenia (15.6408° E, 46.5606° N), are in the paper's data record on Zenodo, https://doi.org/10.5281/zenodo.24320819, in `inputs.zip`: the 683 m × 619 m study area with a 100 m boundary on all sides, 885 × 821 cells at 1 m in EPSG:3794 (Slovenia 1996 / D96/TM), 1,248,599 surface voxels. The record's README describes the data, their sources and licences.
 
 ```bash
 ./build/LSTGPU --surface inputs/surface/maribor --meteo inputs/meteo/2025 --lai inputs/lai/lai_2025.txt \
