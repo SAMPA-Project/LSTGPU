@@ -1,0 +1,6 @@
+build*/
+out/
+.vs/
+.vscode/
+*.aux.xml
+build.cmd

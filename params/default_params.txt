@@ -1,0 +1,48 @@
+# LSTGPU model constants: the compiled-in defaults, calibrated against 220 Landsat 8/9 LST scenes of central Maribor
+# (2013-2025). Copy this file, change values and pass it with --params; keys that are left out keep their defaults.
+# Format: "key value" or "class i albedo emissivity a1 a2 a3 alpha_pt field_capacity_mm"; "#" starts a comment.
+
+hc_scale 1.5636                # multiplier of the convective heat transfer coefficient (calibrated)
+hc_min 4.0                     # floor of h_c before scaling (W m-2 K-1)
+wind_min 0.5                   # floor of the local wind speed (m s-1)
+wind_exp 0.32                  # power-law wind profile exponent (dense urban terrain)
+wind_zref 10                   # reference height of the measured wind (m)
+seasonal_storage_amp 70.910    # amplitude of the seasonal storage term (W m-2), positive = extra storage in winter (calibrated)
+seasonal_storage_phase_day 359.02  # day of the year of its maximum (calibrated)
+canopy_k 0.5                   # Beer-Lambert extinction coefficient for LAI (radiation, canopy fraction)
+wind_canopy_k 0.3              # extinction coefficient of the canopy wind reduction
+wind_canopy_red 0.6            # maximum wind reduction inside a canopy
+shelter_gamma 6.0              # wind sheltering exponent (rad-1)
+sm_init_frac 0.5               # initial soil moisture as a fraction of field capacity
+sm_daily_loss 0.05             # daily drainage of the soil water (soil_water_v2 0 only)
+gamma_pt 0.066                 # psychrometric constant in Priestley-Taylor (kPa K-1)
+brutsaert_coef 1.24            # clear-sky emissivity coefficient (Brutsaert 1975)
+lsurr_fallback_eps 0.95        # emissivity of the surroundings where no surface was sampled
+refl_fallback_albedo 0.2       # albedo of the surroundings where no surface was sampled
+veg_lw_transmitted 1           # 1: longwave transmitted through a canopy comes from surfaces at air temperature
+lsurr_ray_weights 1            # 1: surrounding surfaces weighted per hemisphere ray (rays x bin solid angle x cos / pi); 0: 1 m2 form factors
+soil_water_v2 1                # 1: the soil water bucket limits the latent heat in the energy balance and is depleted by it,
+                               #    drains only above field capacity, water stress below et_stress_frac; 0: simple bucket
+open_water_class 13            # material class of open water, which never dries out (-1: none)
+et_stress_frac 0.5             # latent heat reduced linearly below this fraction of field capacity (0: no stress)
+canopy_exchange_tau 1          # 1: a surface seen through a canopy is weighted by the transmittance exp(-k LAI) in the reflected shortwave
+                               #    and Lsurr sums, as the direct beam; 0: by the canopy fraction (-0.05 K area mean)
+wind_height_agl 1              # 1: the wind profile height is the voxel's height above the local ground (street level 0, roofs the
+                               #    building height); 0: above the lowest ground point of the simulated area
+
+# materials: albedo, emissivity, OHM a1, a2 (h), a3 (W m-2), Priestley-Taylor alpha, field capacity (mm)
+class 0 0.15368 0.94561 0.61629 0.35141 -38.285 0.28111 55.756   # average ground = 0.614 asphalt + 0.187 grass + 0.185 soil + 0.013 concrete
+class 1 0.13 0.95 0.78406 0.3 -42.42 0 0                     # asphalt
+class 2 0.17 0.95 0.355 0.335 -35.275 0.70074 200            # soil
+class 3 0.21 0.93 0.32 0.54 -27.4 0.80854 100                # grass
+class 4 0.28 0.9 0.78406 0.3 -42.42 0 0                      # cobble
+class 5 0.17 0.98 0.215 0.325 -19.85 0.92713 150             # shrubs and trees
+class 6 0.23 0.9 0.67272 0.3 -42.42 0 0                      # concrete
+class 7 0.27 0.9 0.31316 0.337 -33.87 0 0                    # clay tile roof
+class 8 0.5 0.85 0.13918 0.337 -33.87 0 0                    # membrane roof
+class 9 0.5 0.85 0.13918 0.337 -33.87 0 0                    # metal roof
+class 10 0.15 0.9 0.23197 0.337 -33.87 0 0                   # wood
+class 11 0.3 0.91 0.78406 0.3 -42.42 0 0                     # wall
+class 12 0.1 0.93 0.32 0.54 -27.4 0.1 50                     # artificial grass
+class 13 0.1 0.95 0.5 0.21 -39.1 1.26 1000                   # water
+class 14 0.31023 0.88835 0.39272 0.32464 -36.726 0 0         # average roof = 0.433 clay tile + 0.334 concrete + 0.170 metal + 0.063 membrane
